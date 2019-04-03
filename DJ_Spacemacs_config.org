@@ -1,0 +1,117 @@
+* 中文相关
+** 退出insert模式时，自动切成英文输入法。 貌似只有pyim输入法才有效
+*** step1： 在dotspacemacs-configuration-layers 中配置并启用 chinese
+    (chinese :variables
+    chinese-enable-fcitx t)
+
+*** setp2 在dotspacemacs/user-config() 配置词库
+    # 给pyim添加词库。没有词库的pyim是及其不好用的。
+    (setq pyim-dicts
+    '((:name "bigdict" :file "/Users/monty/DIGEST/SOFT/Emacs/pyim_dict/pyim-bigdict.pyim")))
+    # 选词框显示8个候选词
+    (setq pyim-page-length 8)
+
+
+
+
+**  解决org-table中英混排对齐问题
+*** 方法一:  Ubuntu Mono的中文字体宽度是英文字体宽度2倍的字体
+**** 安装字体
+     Ubuntu Mono: https://design.ubuntu.com/font/    Ubuntu Mono的中文字体宽度是英文字体宽度2倍的字体
+     Source Code Pro:  https://github.com/adobe-fonts/source-code-pro
+**** 设置默认字体
+     dotspacemacs-default-font '("Source Code Pro"
+     :size 14
+     :weight normal
+     :width normal
+     :powerline-scale 1.1)
+**** 在(defun dotspacemacs/user-config () 中单独设置 org-table 的中文字体
+     (custom-set-faces
+     '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
+
+*** 方法二： 根据默认字体的大小，找到一个初始宽度为默认字体宽度２倍的中文字体
+    # 设定一个中文字体相对默认字体的放缩比例，比如英文字体是 Meslo LG M :size 14 ，
+    # 中文字体 Noto Sans Mono CJK SC 放缩比例1.2正合适。这种方法的缺点是，字体不好找。
+**** 安装字体
+     Meslo LG M  : https://github.com/andreberg/Meslo-Font
+
+     Noto Sans Mono CJK SC : https://www.google.com/get/noto/  下载这个 Noto Sans CJK SC
+
+**** 设置默认字体
+     dotspacemacs-default-font '("Meslo LG M"
+     :size 14
+     :weight normal
+     :width normal
+     :powerline-scale 1.1)
+
+
+**** 在(defun dotspacemacs/user-config () 设置默认字体宽度２倍的中文字体
+     # ;;当遇到 kana han symbol cjk-misc bopomofo 字符集时，Emacs 明白需要使用
+     # ;; Noto Sans Mono CJK SC 字体，同时设置缩放比例
+     (dolist (charset '(kana han symbol cjk-misc bopomofo))
+     (set-fontset-font (frame-parameter nil 'font)
+     charset (font-spec :family "Noto Sans Mono CJK SC"))
+     (setq face-font-rescale-alist '(("Noto Sans Mono CJK SC" . 1.2))))
+
+
+* UI 设置
+
+** 启用 monokai 配色
+*** step1: 在dotspacemacs-configuration-layers 启用 themes-megapack
+
+
+*** step2: 在(custom-set-variables 设置 monokai 高亮选中文本的颜色
+    '(monokai-highlight "#8B4513")
+
+
+** 直接修改值
+   # 让 learder key  SPC 响应快一点。
+   dotspacemacs-which-key-delay 0.1
+
+
+
+   # 编辑风格选择 hybrid
+   dotspacemacs-editing-style 'hybrid
+
+** dotspacemacs-configuration-layers
+   # 在 Mac 电脑上添加 osx， 这样会自动做一些 Mac 有关的设置。
+   osx
+
+
+
+** (defun dotspacemacs/user-init ()
+   # 使用国内的源
+   (setq configuration-layer--elpa-archives
+   '(
+   ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+   ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+   ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+   )
+   )
+
+** dotspacemacs/user-config()
+   # 光标居中
+   (global-centered-cursor-mode)
+
+   # 取消中英混排时多出的空格。
+   (global-pangu-spacing-mode 0)
+   (set (make-local-variable 'pangu-spacing-real-insert-separtor) nil)
+
+
+   # 设置 org 任务层级 对应的图标, 这里只设置了4级。 要个多级，继续往后加就是了。
+   (with-eval-after-load 'org
+   (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
+   )
+
+
+* Git 设置
+** 在dotspacemacs-configuration-layers 启用 git 和 version-control
+** 在defun dotspacemacs/user-init ()中设置
+   (setq-default git-magit-status-fullscreen t)
+
+* Test table align
+  |------------------+----------------+------------------------|
+  | tesr看看不错     | 环澳           | very good              |
+  |------------------+----------------+------------------------|
+  | this is good job | your are right | thank you 妈妈         |
+  | fdjfie           | jda            | 这回，卡款ikdai1 ,dai1 |
