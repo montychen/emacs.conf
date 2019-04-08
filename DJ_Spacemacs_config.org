@@ -74,13 +74,13 @@
    dotspacemacs-editing-style 'hybrid
 
 ** dotspacemacs-configuration-layers
-   # 在 Mac 电脑上添加 osx， 这样会自动做一些 Mac 有关的设置。
+*** 在 Mac 电脑上添加 osx， 这样会自动做一些 Mac 有关的设置。
    osx
 
 
 
 ** (defun dotspacemacs/user-init ()
-   # 使用国内的源
+*** 使用国内的源
    (setq configuration-layer--elpa-archives
    '(
    ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
@@ -90,15 +90,21 @@
    )
 
 ** dotspacemacs/user-config()
-   # 光标居中
+*** 光标居中
    (global-centered-cursor-mode)
 
-   # 取消中英混排时多出的空格。
+*** 取消中英混排时多出的空格。
    (global-pangu-spacing-mode 0)
    (set (make-local-variable 'pangu-spacing-real-insert-separtor) nil)
 
+*** 在底部 mode-line 显示当前文件的完整路径
+    (with-eval-after-load 'spaceline-config
+    (spaceline-define-segment buffer-id
+    (if (buffer-file-name)
+    (abbreviate-file-name (buffer-file-name))
+    (powerline-buffer-id))))
 
-   # 设置 org 任务层级 对应的图标, 这里只设置了4级。 要个多级，继续往后加就是了。
+*** 设置 org 任务层级 对应的图标, 这里只设置了4级。 要个多级，继续往后加就是了。
    (with-eval-after-load 'org
    (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
    )
