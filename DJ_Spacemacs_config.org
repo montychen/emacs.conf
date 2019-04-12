@@ -1,15 +1,20 @@
 * 中文相关
 ** 退出insert模式时，自动切成英文输入法。 貌似只有pyim输入法才有效
 *** step1： 在dotspacemacs-configuration-layers 中配置并启用 chinese
+	#+begin_src elisp
 	(chinese :variables
-	chinese-enable-fcitx t)
+			  chinese-enable-fcitx t)
+	#+end_src
+
 
 *** setp2 在dotspacemacs/user-config() 配置词库
-	# 给pyim添加词库。没有词库的pyim是及其不好用的。
+	#+begin_src elisp
+	;; 给pyim添加词库。没有词库的pyim是及其不好用的。
 	(setq pyim-dicts
-	'((:name "bigdict" :file "/Users/monty/DIGEST/SOFT/Emacs/pyim_dict/pyim-bigdict.pyim")))
-	# 选词框显示8个候选词
+		   '((:name "bigdict" :file "/Users/monty/DIGEST/SOFT/Emacs/pyim_dict/pyim-bigdict.pyim")))
+	 ;; 选词框显示8个候选词
 	(setq pyim-page-length 8)
+	#+end_src
 
 
 
@@ -110,13 +115,42 @@
 	)
 
 *** c_c++ 缩进4个空格
-	#+begin_src emacs_lisp
+	#+begin_src elisp
   (setq-default c-basic-offset 4
 				tab-width 4
 				indent-tabs-mode t)
   (setq c-default-style "linux")
 	#+end_src
 
+*** Mac下让emacs和 系统剪切板 共享的方法 [[https://emacs-china.org/t/topic/3417/3]]
+	#+begin_src elisp
+;; 直接从源头上修改， 不用额外绑定
+
+;; 如果在mac 终端下使用emacs ,则使用pbpaste从clipboard 获取内容
+(defadvice gui-backend-get-selection (around get-clip-from-terminal-on-osx activate)
+  ad-do-it
+  (when (and (equal system-type 'darwin)
+			 (not (display-graphic-p))
+			 (not (window-system))
+			 (equal (ad-get-arg 0) 'CLIPBOARD))
+	(let ((default-directory "~/"))
+	  (setq ad-return-value (shell-command-to-string "pbpaste")))))
+
+;; "+yy 设置内容到系统clipboard
+;; 如果在mac 终端下使用emacs ,则使用pbpaste从clipboard 获取内容
+(defadvice gui-backend-set-selection (around set-clip-from-terminal-on-osx activate)
+  ad-do-it
+  ;; (message "%s %s"  (ad-get-arg 0)  (ad-get-arg 1))
+  (when (and (equal system-type 'darwin)
+			 (not (display-graphic-p))
+			 (not (window-system))
+			 (equal (ad-get-arg 0) 'CLIPBOARD))
+	(let ((process-connection-type nil)   ; ; use pipe
+		  (default-directory "~/"))
+	  (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+		(process-send-string proc (ad-get-arg 1))
+		(process-send-eof proc)))))
+	#+end_src
 
 * Git 设置
 ** 在dotspacemacs-configuration-layers 启用 git 和 version-control
