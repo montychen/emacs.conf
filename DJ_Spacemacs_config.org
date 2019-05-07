@@ -60,14 +60,21 @@
      Ubuntu Mono: https://design.ubuntu.com/font/    Ubuntu Mono的中文字体宽度是英文字体宽度2倍的字体
      Source Code Pro:  https://github.com/adobe-fonts/source-code-pro
 **** 设置默认字体
-     dotspacemacs-default-font '("Source Code Pro"
-     :size 14
-     :weight normal
-     :width normal
-     :powerline-scale 1.1)
+     #+begin_src elisp
+
+       dotspacemacs-default-font '("Source Code Pro"
+                                   :size 14
+                                   :weight normal
+                                   :width normal
+                                   :powerline-scale 1.1)
+     #+end_src
+
 **** 在(defun dotspacemacs/user-config () 中单独设置 org-table 的中文字体
-     (custom-set-faces
-     '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
+     #+begin_src elisp
+       (custom-set-faces
+        '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
+     #+end_src
+
 
 *** 方法二： 根据默认字体的大小，找到一个初始宽度为默认字体宽度２倍的中文字体
     # 设定一个中文字体相对默认字体的放缩比例，比如英文字体是 Meslo LG M :size 14 ，
@@ -78,21 +85,26 @@
      Noto Sans Mono CJK SC : https://www.google.com/get/noto/  下载这个 Noto Sans CJK SC
 
 **** 设置默认字体
-     dotspacemacs-default-font '("Meslo LG M"
-     :size 14
-     :weight normal
-     :width normal
-     :powerline-scale 1.1)
+     #+begin_src elisp
+       dotspacemacs-default-font '("Meslo LG M"
+                                   :size 14
+                                   :weight normal
+                                   :width normal
+                                   :powerline-scale 1.1)
+     #+end_src
+
 
 
 **** 在(defun dotspacemacs/user-config () 设置默认字体宽度２倍的中文字体
      # ;;当遇到 kana han symbol cjk-misc bopomofo 字符集时，Emacs 明白需要使用
      # ;; Noto Sans Mono CJK SC 字体，同时设置缩放比例
-     (dolist (charset '(kana han symbol cjk-misc bopomofo))
-     (set-fontset-font (frame-parameter nil 'font)
-     charset (font-spec :family "Noto Sans Mono CJK SC"))
-     (setq face-font-rescale-alist '(("Noto Sans Mono CJK SC" . 1.2))))
+     #+begin_src elisp
+       (dolist (charset '(kana han symbol cjk-misc bopomofo))
+         (set-fontset-font (frame-parameter nil 'font)
+                           charset (font-spec :family "Noto Sans Mono CJK SC"))
+         (setq face-font-rescale-alist '(("Noto Sans Mono CJK SC" . 1.2))))
 
+     #+end_src
 
 * UI 设置
 
@@ -107,7 +119,7 @@
 
 ** 设置高亮选中文本的颜色
    1、 M-x customize-face 回车，在提示输入时输入 region
-   
+
    2、设置 background "#FF9933"   foreground "black", 只设置这2项，然后保存。
 
    你也可以自直接在.spacemacs配置文件的尾部直接加入：
