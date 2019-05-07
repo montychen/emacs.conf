@@ -159,11 +159,14 @@
     (set (make-local-variable 'pangu-spacing-real-insert-separtor) nil)
 
 *** 在底部 mode-line 显示当前buffer的完整路径
-    (with-eval-after-load 'spaceline-config
-    (spaceline-define-segment buffer-id
-    (if (buffer-file-name)
-    (abbreviate-file-name (buffer-file-name))
-    (powerline-buffer-id))))
+    #+begin_src elisp
+      (with-eval-after-load 'spaceline-config
+        (spaceline-define-segment buffer-id
+          (if (buffer-file-name)
+              (abbreviate-file-name (buffer-file-name))
+            (powerline-buffer-id))))
+
+    #+end_src
 
 *** 设置 org 任务层级 对应的图标, 这里只设置了4级。 要个多级，继续往后加就是了。
     (with-eval-after-load 'org
