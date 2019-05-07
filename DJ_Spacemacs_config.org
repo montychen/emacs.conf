@@ -107,6 +107,7 @@
 
 ** 设置高亮选中文本的颜色
    1、 M-x customize-face 回车，在提示输入时输入 region
+   
    2、设置 background "#FF9933"   foreground "black", 只设置这2项，然后保存。
 
    你也可以自直接在.spacemacs配置文件的尾部直接加入：
@@ -117,7 +118,7 @@
         )
 
        (custom-set-faces
-        '(region ((t (:background "#FF9933" :foreground "black"))))
+        '(region ((t (:background "#FF9933" :foreground "black"))))  ;; 主要是这行
         )
        )
 
