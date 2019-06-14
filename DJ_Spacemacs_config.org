@@ -1,5 +1,5 @@
 * 安装 spacemacs
-  1、如果之前有emacs或spacemacs，先清除配置文件或做好备份，如：
+  1、如果之前有 emacs 或 spacemacs，先清除配置文件或做好备份，如：
   #+begin_src sh
 	cd ~
 	mv .spacemacs .spacemacs.bak
@@ -34,30 +34,36 @@
 
 
 * 中文相关
-** 退出insert模式时，自动切成英文输入法。 貌似只有pyim输入法才有效
-*** step1： 在dotspacemacs-configuration-layers 中配置并启用 chinese
+** 退出 insert 模式时，自动切成英文输入法。fcitx.el  配合 fcitx-remote-for-osx 来实现
+*** step1： 在 dotspacemacs-configuration-layers 中配置并启用 chinese，并启用 fcitx.el 
 	#+begin_src elisp
 	  (chinese :variables
 			   chinese-enable-fcitx t)
 	#+end_src
 
 
-*** setp2 在dotspacemacs/user-config() 配置词库
+*** setp2 在 dotspacemacs/user-config()
 	#+begin_src elisp
-	  ;; 给pyim添加词库。没有词库的pyim是及其不好用的。
-	  (setq pyim-dicts
-			'((:name "bigdict" :file "/Users/monty/DIGEST/SOFT/Emacs/pyim_dict/pyim-bigdict.pyim")))
-	  ;; 选词框显示8个候选词
-	  (setq pyim-page-length 8)
+	  ;; Make sure the following comes before `(fcitx-aggressive-setup)'
+	  (setq fcitx-active-evil-states '(insert emacs hybrid)) ; For Spacemacs use hybrid mode。 默认方式是 '(insert emacs)
+	  (fcitx-aggressive-setup)   ; 如果要在 minibuffer 里输入中文，就改成 （ fcitx-default-setup ）
+	  (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+	  ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
 	#+end_src
 
+*** step3 在 macOS 终端用 brew 安装 fcitx-remote-for-osx
+	#+begin_src bash
+	  brew tap xcodebuild/fcitx-remote-for-osx   # 取消 tap 用  brew untap xcodebuild/fcitx-remote-for-osx；  显示当前有那些仓库可用 brew tap
+      brew install xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx --with-sogou-pinyin   # --with-sogou-pinyin 表示搜狗拼音
+      brew info xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx    # 查看支持其他输入法的选项。
+	#+end_src
 
+*** setp4 参考 [[https://github.com/xcodebuild/fcitx-remote-for-osx]] 在 macOS 在输入法面板设置“选择下一个输入法的快捷键”为：Ctrl-Shift-z
 
-
-**  解决org-table中英混排对齐问题
-*** 方法一:  Ubuntu Mono的中文字体宽度是英文字体宽度2倍的字体
+**  解决 org-table 中英混排对齐问题
+*** 方法一:  Ubuntu Mono 的中文字体宽度是英文字体宽度 2 倍的字体
 **** 安装字体
-	 Ubuntu Mono: https://design.ubuntu.com/font/    Ubuntu Mono的中文字体宽度是英文字体宽度2倍的字体
+	 Ubuntu Mono: https://design.ubuntu.com/font/    Ubuntu Mono 的中文字体宽度是英文字体宽度 2 倍的字体
 	 Source Code Pro:  https://github.com/adobe-fonts/source-code-pro
 **** 设置默认字体
 	 #+begin_src elisp
@@ -78,7 +84,7 @@
 
 *** 方法二： 根据默认字体的大小，找到一个初始宽度为默认字体宽度２倍的中文字体
 	# 设定一个中文字体相对默认字体的放缩比例，比如英文字体是 Meslo LG M :size 14 ，
-	# 中文字体 Noto Sans Mono CJK SC 放缩比例1.2正合适。这种方法的缺点是，字体不好找。
+	# 中文字体 Noto Sans Mono CJK SC 放缩比例 1.2 正合适。这种方法的缺点是，字体不好找。
 **** 安装字体
 	 Meslo LG M  : https://github.com/andreberg/Meslo-Font
 
@@ -109,9 +115,9 @@
 * UI 设置
 
 ** 启用 monokai 配色
-*** step1: 在dotspacemacs-configuration-layers 启用 themes-megapack
+*** step1: 在 dotspacemacs-configuration-layers 启用 themes-megapack
 
-*** step2: 在dotspacemacs-themes 加入 monokai
+*** step2: 在 dotspacemacs-themes 加入 monokai
 
 
 *** 这个好像在 0.300 的版本中不起作用了: 在(custom-set-variables 设置 monokai 高亮选中文本的颜色
@@ -120,9 +126,9 @@
 ** 设置高亮选中文本的颜色
    1、 M-x customize-face 回车，在提示输入时输入 region
 
-   2、设置 background "#FF9933"   foreground "black", 只设置这2项，然后保存。
+   2、设置 background "#FF9933"   foreground "black", 只设置这 2 项，然后保存。
 
-   你也可以自直接在.spacemacs配置文件的尾部直接加入：
+   你也可以自直接在.spacemacs 配置文件的尾部直接加入：
    #+begin_src elisp
 	 (defun dotspacemacs/emacs-custom-settings ()
 	   (custom-set-variables
@@ -161,7 +167,7 @@
 
 	#+end_src
 
-*** 在底部 mode-line 显示当前buffer的完整路径
+*** 在底部 mode-line 显示当前 buffer 的完整路径
 	#+begin_src elisp
 	  (with-eval-after-load 'spaceline-config
 		(spaceline-define-segment buffer-id
@@ -171,12 +177,12 @@
 
 	#+end_src
 
-*** 设置 org 任务层级 对应的图标, 这里只设置了4级。 要个多级，继续往后加就是了。
+*** 设置 org 任务层级 对应的图标, 这里只设置了 4 级。 要个多级，继续往后加就是了。
 	(with-eval-after-load 'org
 	(setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
 	)
 
-*** c_c++ 缩进4个空格
+*** c_c++ 缩进 4 个空格
 	#+begin_src elisp
 	  (setq-default c-basic-offset 4
 					tab-width 4
@@ -184,9 +190,9 @@
 	  (setq c-default-style "linux")
 	#+end_src
 
-*** Mac下让emacs和 系统剪切板 共享的方法 https://github.com/syl20bnr/spacemacs/issues/10896
+*** Mac 下让 emacs 和 系统剪切板 共享的方法 https://github.com/syl20bnr/spacemacs/issues/10896
 	# 1. 添加附加包 dotspacemacs-additional-packages '(osx-clipboard)
-	# 2. 在user-config() 下添加如下配置
+	# 2. 在 user-config() 下添加如下配置
 	#+begin_src elisp
 	  (use-package osx-clipboard
 		:commands
@@ -209,13 +215,13 @@
 	#+end_src
 
 * Git 设置
-** 在dotspacemacs-configuration-layers 启用 git 和 version-control
-** 在defun dotspacemacs/user-init ()中设置
+** 在 dotspacemacs-configuration-layers 启用 git 和 version-control
+** 在 defun dotspacemacs/user-init ()中设置
    (setq-default git-magit-status-fullscreen t)
 
 * Test table align
   |------------------+----------------+------------------------|
-  | tesr看看不错     | 环澳           | very good              |
+  | tesr 看看不错     | 环澳           | very good              |
   |------------------+----------------+------------------------|
   | this is good job | your are right | thank you 妈妈         |
-  | fdjfie           | jda            | 这回，卡款ikdai1 ,dai1 |
+  | fdjfie           | jda            | 这回，卡款 ikdai1 ,dai1 |
