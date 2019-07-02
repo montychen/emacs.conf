@@ -217,7 +217,9 @@
 * Git 设置
 ** 在 dotspacemacs-configuration-layers 启用 git 和 version-control
 ** 在 defun dotspacemacs/user-init ()中设置
-   (setq-default git-magit-status-fullscreen t)
+#+begin_src elisp
+   (setq-default git-magit-status-fullscreen t)    ;; 全屏显示 magit 的状态窗口
+#+end_src
 
 * Test table align
   |------------------+----------------+------------------------|
