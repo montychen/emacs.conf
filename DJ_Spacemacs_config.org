@@ -23,11 +23,10 @@
   #+end_src
   在 (defun dotspacemacs/user-init () 下加入 **develop 分支的镜像**
   #+begin_src elisp
-
-	(setq configuration-layer-elpa-archives
-		  '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-			("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+(setq configuration-layer-elpa-archives
+    '(("melpa-cn" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.cloud.tencent.com/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")))
   #+end_src
 
   5、安装完毕，运行 emacs
@@ -35,7 +34,7 @@
 
 * 中文相关
 ** 退出 insert 模式时，自动切成英文输入法。fcitx.el  配合 fcitx-remote-for-osx 来实现
-*** step1： 在 dotspacemacs-configuration-layers 中配置并启用 chinese，并启用 fcitx.el 
+*** step1： 在 dotspacemacs-configuration-layers 中配置并启用 chinese，并启用 fcitx.el
 	#+begin_src elisp
 	  (chinese :variables
 			   chinese-enable-fcitx t)
@@ -54,8 +53,8 @@
 *** step3 在 macOS 终端用 brew 安装 fcitx-remote-for-osx
 	#+begin_src bash
 	  brew tap xcodebuild/fcitx-remote-for-osx   # 取消 tap 用  brew untap xcodebuild/fcitx-remote-for-osx；  显示当前有那些仓库可用 brew tap
-      brew install xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx --with-sogou-pinyin   # --with-sogou-pinyin 表示搜狗拼音
-      brew info xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx    # 查看支持其他输入法的选项。
+	  brew install xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx --with-sogou-pinyin   # --with-sogou-pinyin 表示搜狗拼音
+	  brew info xcodebuild/fcitx-remote-for-osx/fcitx-remote-for-osx    # 查看支持其他输入法的选项。
 	#+end_src
 
 *** setp4 参考 [[https://github.com/xcodebuild/fcitx-remote-for-osx]] 在 macOS 在输入法面板设置“选择下一个输入法的快捷键”为：Ctrl-Shift-z
@@ -178,9 +177,11 @@
 	#+end_src
 
 *** 设置 org 任务层级 对应的图标, 这里只设置了 4 级。 要个多级，继续往后加就是了。
-	(with-eval-after-load 'org
-	(setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
-	)
+	#+begin_src elisp
+	  (with-eval-after-load 'org
+		(setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
+		)
+	#+end_src
 
 *** c_c++ 缩进 4 个空格
 	#+begin_src elisp
@@ -217,9 +218,9 @@
 * Git 设置
 ** 在 dotspacemacs-configuration-layers 启用 git 和 version-control
 ** 在 defun dotspacemacs/user-init ()中设置
-#+begin_src elisp
-   (setq-default git-magit-status-fullscreen t)    ;; 全屏显示 magit 的状态窗口
-#+end_src
+   #+begin_src elisp
+	 (setq-default git-magit-status-fullscreen t)    ;; 全屏显示 magit 的状态窗口
+   #+end_src
 
 * Test table align
   |------------------+----------------+------------------------|
@@ -227,3 +228,5 @@
   |------------------+----------------+------------------------|
   | this is good job | your are right | thank you 妈妈         |
   | fdjfie           | jda            | 这回，卡款 ikdai1 ,dai1 |
+  
+  djaie *dkaei* dkaei*aa*djei/aa/ 
