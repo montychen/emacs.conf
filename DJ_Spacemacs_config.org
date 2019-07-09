@@ -141,6 +141,11 @@
 
    #+end_src
 
+* 设置背景色，这个方法貌似很强大。 任何 theme的背景色，都可以用它修改。    
+#+begin_src elisp
+  (set-background-color "#0B2B2D")   ;; 把背景色改成 jonathan blow 使用的 绿色背景。
+#+end_src
+
 ** 直接修改值
 *** 让 learder key  SPC 响应快一点。
 	dotspacemacs-which-key-delay 0.1
