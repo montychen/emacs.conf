@@ -196,6 +196,15 @@
 	  (setq c-default-style "linux")
 	#+end_src
 
+*** 设置打开文件时默认是只读模式
+#+begin_src elisp
+(defun read-only-hook ()
+  (read-only-mode 1))
+
+(add-hook 'find-file-hook 'read-only-hook)
+(add-to-list 'command-switch-alist '("--global-readonly" . read-only-hook))
+#+end_src
+
 *** Mac 下让 emacs 和 系统剪切板 共享的方法 https://github.com/syl20bnr/spacemacs/issues/10896
 	# 1. 添加附加包 dotspacemacs-additional-packages '(osx-clipboard)
 	# 2. 在 user-config() 下添加如下配置
