@@ -23,10 +23,10 @@
   #+end_src
   在 (defun dotspacemacs/user-init () 下加入 **develop 分支的镜像**
   #+begin_src elisp
-(setq configuration-layer-elpa-archives
-    '(("melpa-cn" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
-      ("org-cn"   . "http://mirrors.cloud.tencent.com/elpa/org/")
-      ("gnu-cn"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")))
+	(setq configuration-layer-elpa-archives
+		  '(("melpa-cn" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
+			("org-cn"   . "http://mirrors.cloud.tencent.com/elpa/org/")
+			("gnu-cn"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")))
   #+end_src
 
   5、安装完毕，运行 emacs
@@ -141,10 +141,10 @@
 
    #+end_src
 
-* 设置背景色，这个方法貌似很强大。 任何 theme的背景色，都可以用它修改。    
-#+begin_src elisp
-  (set-background-color "#0B2B2D")   ;; 把背景色改成 jonathan blow 使用的 绿色背景。
-#+end_src
+** 设置背景色，这个方法貌似很强大。 任何 theme的背景色，都可以用它修改。
+   #+begin_src elisp
+	 (set-background-color "#0B2B2D")   ;; 把背景色改成 jonathan blow 使用的 绿色背景。
+   #+end_src
 
 ** 直接修改值
 *** 让 learder key  SPC 响应快一点。
@@ -196,14 +196,37 @@
 	  (setq c-default-style "linux")
 	#+end_src
 
-*** 设置打开文件时默认是只读模式
-#+begin_src elisp
-(defun read-only-hook ()
-  (read-only-mode 1))
+*** [在spacemase的 emacs 模式下时]设置打开文件时默认是只读模式
+	#+begin_src elisp
+	  (defun read-only-hook ()
+		(read-only-mode 1))
 
-(add-hook 'find-file-hook 'read-only-hook)
-(add-to-list 'command-switch-alist '("--global-readonly" . read-only-hook))
-#+end_src
+	  (add-hook 'find-file-hook 'read-only-hook)
+	  (add-to-list 'command-switch-alist '("--global-readonly" . read-only-hook))
+	#+end_src
+
+*** [在spacemase的 emacs 模式下时] 只读模式，插入模式设置不同的光标类型。
+	#+begin_src elisp
+	  (defun djcb-set-cursor-according-to-mode ()
+		"change cursor color and type according to some minor modes."
+		(cond
+		 (buffer-read-only
+		  (set-cursor-color "yellow")
+		  (setq cursor-type 'hollow)
+		  )
+		 (overwrite-mode
+		  (set-cursor-color "red")
+		  (setq cursor-type 'hollow)
+		  )
+		 (t
+		  (set-cursor-color "red")
+		  (blink-cursor-mode t)    ;; 设置光标闪烁
+		  (setq cursor-type 'bar)
+		  )
+		 )
+		)
+	  (add-hook 'post-command-hook 'djcb-set-cursor-according-to-mode)
+	#+end_src
 
 *** Mac 下让 emacs 和 系统剪切板 共享的方法 https://github.com/syl20bnr/spacemacs/issues/10896
 	# 1. 添加附加包 dotspacemacs-additional-packages '(osx-clipboard)
@@ -242,5 +265,5 @@
   |------------------+----------------+------------------------|
   | this is good job | your are right | thank you 妈妈         |
   | fdjfie           | jda            | 这回，卡款 ikdai1 ,dai1 |
-  
-  djaie *dkaei* dkaei*aa*djei/aa/ 
+
+  djaie *dkaei* dkaei*aa*djei/aa/
