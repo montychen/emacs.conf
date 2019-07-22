@@ -68,7 +68,7 @@
 	 #+begin_src elisp
 
 	   dotspacemacs-default-font '("Source Code Pro"
-								   :size 14
+								   :size 14	; 改成15大小看起来更舒服，不过似乎表格就不对齐了。
 								   :weight normal
 								   :width normal
 								   :powerline-scale 1.1)
@@ -92,7 +92,7 @@
 **** 设置默认字体
 	 #+begin_src elisp
 	   dotspacemacs-default-font '("Meslo LG M"
-								   :size 14
+								   :size 14	; 改成15大小看起来更舒服，不过似乎表格就不对齐了。
 								   :weight normal
 								   :width normal
 								   :powerline-scale 1.1)
