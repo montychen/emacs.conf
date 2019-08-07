@@ -141,7 +141,12 @@
 
    #+end_src
 
-** 设置背景色，这个方法貌似很强大。 任何 theme的背景色，都可以用它修改。
+* 底部modeline使用doom-modeline
+把 dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5) 改成如下，来启用doom-modeline
+#+begin_src elisp
+ dotspacemacs-mode-line-theme '(doom)
+#+end_src
+* 设置背景色，这个方法貌似很强大。 任何 theme的背景色，都可以用它修改。
    #+begin_src elisp
 	 (set-background-color "#0B2B2D")   ;; 把背景色改成 jonathan blow 使用的 绿色背景。
    #+end_src
