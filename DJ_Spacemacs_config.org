@@ -150,38 +150,41 @@
 										yafolding ; 代码折叠
 										)
    #+end_src
-   - 代码折叠yafolding缺省的键盘映射如下：
+   - 代码折叠yafolding缺省已经有的键盘映射，不需要我们再keymap的：
+   #+begin_quote
    (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
    (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
    (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
 
    - 在(defun dotspacemacs/user-config () 中加入如下配置：
-	 #+begin_src elisp
-	   ;; swiper搜索keymap
-	   (ivy-mode 1)
-	   (setq ivy-use-virtual-buffers t)
-	   (setq enable-recursive-minibuffers t)
+   #+end_quote
 
-	   (defun dj/swiper-at-point_return()		;按下回车后自动搜索光标所处下的字符串
-		 (interactive)
-		 (let* ((symbol-at-points (thing-at-point 'symbol))
-				(read-symbol (read-from-minibuffer (concat "Swiper [" symbol-at-points
-														   "] : "))))
-		   (if (equal read-symbol "")
-			   (swiper symbol-at-points)
-			 (swiper read-symbol))))
+   #+begin_src elisp
+	 ;; swiper搜索keymap
+	 (ivy-mode 1)
+	 (setq ivy-use-virtual-buffers t)
+	 (setq enable-recursive-minibuffers t)
 
-	   (global-set-key "\C-s" 'dj/swiper-at-point_return) ; 快捷键绑定
+	 (defun dj/swiper-at-point_return()		;按下回车后自动搜索光标所处下的字符串
+	   (interactive)
+	   (let* ((symbol-at-points (thing-at-point 'symbol))
+			  (read-symbol (read-from-minibuffer (concat "Swiper [" symbol-at-points
+														 "] : "))))
+		 (if (equal read-symbol "")
+			 (swiper symbol-at-points)
+		   (swiper read-symbol))))
+
+	 (global-set-key "\C-s" 'dj/swiper-at-point_return) ; 快捷键绑定
 
 
-	   ;; 书签操作keymap
-	   (global-set-key (kbd "<C-f2>") 'bm-toggle)
-	   (global-set-key (kbd "<f2>")   'bm-next)
-	   (global-set-key (kbd "<S-f2>") 'bm-previous)
+	 ;; 书签操作keymap
+	 (global-set-key (kbd "<C-f2>") 'bm-toggle)
+	 (global-set-key (kbd "<f2>")   'bm-next)
+	 (global-set-key (kbd "<S-f2>") 'bm-previous)
 
-	   (add-hook 'prog-mode-hook
-				 (lambda () (yafolding-mode)))
-	 #+end_src
+	 (add-hook 'prog-mode-hook
+			   (lambda () (yafolding-mode)))
+   #+end_src
 * 底部modeline使用doom-modeline
   把 dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5) 改成如下，来启用doom-modeline
   #+begin_src elisp
