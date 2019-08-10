@@ -151,14 +151,13 @@
 										)
    #+end_src
    - 代码折叠yafolding缺省已经有的键盘映射，不需要我们再keymap的：
-   #+begin_quote
-   (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
-   (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
-   (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+	 #+begin_src elisp
+	   (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+	   (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+	   (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+	 #+end_src
 
    - 在(defun dotspacemacs/user-config () 中加入如下配置：
-   #+end_quote
-
    #+begin_src elisp
 	 ;; swiper搜索keymap
 	 (ivy-mode 1)
