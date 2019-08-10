@@ -141,10 +141,11 @@
 
    #+end_src
 
-** 代码折叠,使用 yafolding； 可视化书签，方便跳转用 bm
+** buffer中搜索swiper，代码折叠yafolding； 可视化书签bm
    - 在 dotspacemacs-additional-packages 中加入 yafolding和bm
    #+begin_src elisp
 	 dotspacemacs-additional-packages '(glsl-mode ; opengl 和 vukan 着色器语法高亮
+										swiper		 ;缓冲区中搜索
 										bm		 ; 可视化书签，方便跳转用
 										yafolding ; 代码折叠
 										)
@@ -154,15 +155,33 @@
    (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
    (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
 
-  - 在(defun dotspacemacs/user-config () 中加入如下配置：
-   #+begin_src elisp
-	 (global-set-key (kbd "<C-f2>") 'bm-toggle)
-	 (global-set-key (kbd "<f2>")   'bm-next)
-	 (global-set-key (kbd "<S-f2>") 'bm-previous)
+   - 在(defun dotspacemacs/user-config () 中加入如下配置：
+	 #+begin_src elisp
+	   ;; swiper搜索keymap
+	   (ivy-mode 1)
+	   (setq ivy-use-virtual-buffers t)
+	   (setq enable-recursive-minibuffers t)
 
-	 (add-hook 'prog-mode-hook
-			   (lambda () (yafolding-mode)))
-   #+end_src
+	   (defun dj/swiper-at-point_return()		;按下回车后自动搜索光标所处下的字符串
+		 (interactive)
+		 (let* ((symbol-at-points (thing-at-point 'symbol))
+				(read-symbol (read-from-minibuffer (concat "Swiper [" symbol-at-points
+														   "] : "))))
+		   (if (equal read-symbol "")
+			   (swiper symbol-at-points)
+			 (swiper read-symbol))))
+
+	   (global-set-key "\C-s" 'dj/swiper-at-point_return) ; 快捷键绑定
+
+
+	   ;; 书签操作keymap
+	   (global-set-key (kbd "<C-f2>") 'bm-toggle)
+	   (global-set-key (kbd "<f2>")   'bm-next)
+	   (global-set-key (kbd "<S-f2>") 'bm-previous)
+
+	   (add-hook 'prog-mode-hook
+				 (lambda () (yafolding-mode)))
+	 #+end_src
 * 底部modeline使用doom-modeline
   把 dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5) 改成如下，来启用doom-modeline
   #+begin_src elisp
