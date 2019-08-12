@@ -150,6 +150,9 @@
    #+end_src
 
 
+** 修改显示的默认值
+1、运行 M-x customize-face 回车， 输入 default, 然后就可以进行修改了。
+
 ** buffer中搜索swiper，代码折叠yafolding； 可视化书签bm
    - 在 dotspacemacs-additional-packages 中加入 yafolding和bm
    #+begin_src elisp
