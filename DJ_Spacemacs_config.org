@@ -123,11 +123,9 @@
 	'(monokai-highlight "#8B4513")
 
 ** 设置高亮选中文本的颜色
-   1、 M-x customize-face 回车，在提示输入时输入 region
+   1、运行 M-x list-faces-display 获取当前系统所有高亮的设置，然后选择要修改的项进行配置。如这里设置region，swiper和iedit搜索结果的高亮配置。参考 [[https://emacs.stackexchange.com/questions/47795/spacemacs-how-can-i-customize-the-highlight-style-of-a-matching-parenthesis]]
 
-   2、设置 background "#FF9933"   foreground "black", 只设置这 2 项，然后保存。
-
-   你也可以自直接在.spacemacs 配置文件的尾部直接加入：
+   2、在.spacemacs 配置文件的尾部
    #+begin_src elisp
 	 (defun dotspacemacs/emacs-custom-settings ()
 	   (custom-set-variables
@@ -135,22 +133,22 @@
 		)
 
 	   (custom-set-faces
-		'(region ((t (:background "#FF9933" :foreground "black"))))  ;; 主要是这行
+
+		'(region ((t (:background "#FF9933" :foreground "black"))))
+
+		'(swiper-background-match-face-1 ((t (:background "#FF9933" :foreground "black"))))
+		'(swiper-background-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
+		'(swiper-background-match-face-3 ((t (:background "#FF9933" :foreground "black"))))
+		'(swiper-background-match-face-4 ((t (:background "#FF9933" :foreground "black"))))
+		'(swiper-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
+
+		'(iedit-occurrence ((t (:background "#FF9933" :foreground "black"))))
+
 		)
 	   )
 
    #+end_src
 
-   3、也可以运行 M-x list-faces-display 获取当前系统所有高亮的设置，然后选择要修改的项进行配置。如这里设置swiper和iedit搜索结果的高亮配置。参考 [[https://emacs.stackexchange.com/questions/47795/spacemacs-how-can-i-customize-the-highlight-style-of-a-matching-parenthesis]]
-   #+begin_src elisp
-	 '(swiper-background-match-face-1 ((t (:background "#FF9933" :foreground "black"))))
-	 '(swiper-background-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
-	 '(swiper-background-match-face-3 ((t (:background "#FF9933" :foreground "black"))))
-	 '(swiper-background-match-face-4 ((t (:background "#FF9933" :foreground "black"))))
-	 '(swiper-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
-	 '(iedit-occurrence ((t (:background "#FF9933" :foreground "black"))))
-
-   #+end_src
 
 ** buffer中搜索swiper，代码折叠yafolding； 可视化书签bm
    - 在 dotspacemacs-additional-packages 中加入 yafolding和bm
