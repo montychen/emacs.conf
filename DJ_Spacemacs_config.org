@@ -141,6 +141,17 @@
 
    #+end_src
 
+   3、也可以运行 M-x list-faces-display 获取当前系统所有高亮的设置，然后选择要修改的项进行配置。如这里设置swiper和iedit搜索结果的高亮配置。参考 [[https://emacs.stackexchange.com/questions/47795/spacemacs-how-can-i-customize-the-highlight-style-of-a-matching-parenthesis]]
+   #+begin_src elisp
+	 '(swiper-background-match-face-1 ((t (:background "#FF9933" :foreground "black"))))
+	 '(swiper-background-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
+	 '(swiper-background-match-face-3 ((t (:background "#FF9933" :foreground "black"))))
+	 '(swiper-background-match-face-4 ((t (:background "#FF9933" :foreground "black"))))
+	 '(swiper-match-face-2 ((t (:background "#FF9933" :foreground "black"))))
+	 '(iedit-occurrence ((t (:background "#FF9933" :foreground "black"))))
+
+   #+end_src
+
 ** buffer中搜索swiper，代码折叠yafolding； 可视化书签bm
    - 在 dotspacemacs-additional-packages 中加入 yafolding和bm
    #+begin_src elisp
